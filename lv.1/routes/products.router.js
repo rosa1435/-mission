@@ -31,7 +31,7 @@ router.post('/products', async (req, res) => {
 // 상품 목록 조회 API
 
 router.get('/products', async (req, res) => {
-    const items = await item.find().sort({ createdAt: -1 }).exec();
+    const items = await item.find({}, '-password').sort({ createdAt: -1 }).exec();
     return res.status(200).json({ items });
 });
 
@@ -45,7 +45,7 @@ router.get('/products/:productId', async (req, res) => {
     }
 
 
-    const oneitem = await item.findById(productId).exec();
+    const oneitem = await item.findById(productId).select('-password').exec();
 
     if (!oneitem) { //상품이 존재하지 않을경우
         return res.status(404).json({ message: "상품 조회에 실패하였습니다." })
