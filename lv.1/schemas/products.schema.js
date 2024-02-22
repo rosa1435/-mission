@@ -20,13 +20,13 @@ const goodsSchema = new mongoose.Schema({
   status: { //상품상태 
     type: String,
     enum: ['FOR_SALE', 'SOLD_OUT'],
-    default:'FOR_SALE',
-    },
-    createdAt: { // 작성 날짜
-      type: Date,
-      default: Date.now // 문서가 생성될 때 현재 날짜와 시간으로 설정
-    }
+    default: 'FOR_SALE',
+  },
+  createdAt: { // 작성 날짜
+    type: Date,
+    default: Date.now // 문서가 생성될 때 현재 날짜와 시간으로 설정
+  }
 });
 
 
-export default mongoose.model('node_lv1', goodsSchema); // 매니저님한테 물어보기
+export default mongoose.model('item', goodsSchema); // 매니저님한테 물어보기

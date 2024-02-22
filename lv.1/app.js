@@ -1,5 +1,6 @@
 import express from 'express';
 import connect from './schemas/index.js';
+import productsRouter from './routes/products.router.js';
 
 const app = express();
 const PORT = 3000;
@@ -13,11 +14,11 @@ app.use(express.urlencoded({ extended: true }));
 const router = express.Router();
 
 router.get('/', (req, res) => {
-  return res.json({ message: 'Hi!' });
+    return res.json({ message: 'Hi!' });
 });
 
-app.use('/api', router);
+app.use('/api', [router, productsRouter]);
 
 app.listen(PORT, () => {
-  console.log(PORT, '포트로 서버가 열렸어요!');
+    console.log(PORT, '포트로 서버가 열렸어요!');
 });
