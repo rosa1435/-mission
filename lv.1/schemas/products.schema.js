@@ -14,7 +14,7 @@ const goodsSchema = new mongoose.Schema({
     required: true,
   },
   password: { // 비밀번호
-    type: Number,
+    type: String,
     required: true,
   },
   status: { //상품상태 

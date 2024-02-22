@@ -53,4 +53,41 @@ router.get('/products/:productId', async (req, res) => {
     return res.status(200).json(oneitem);
 });
 
+
+
+// 상품정보 수정 API
+router.patch('/products/:productId', async (req, res) => {
+    const { productId } = req.params;
+    const { title, content, password, status } = req.body;
+
+    // 데이터 형식 검증
+    if (!productId || !title || !content || !password || !status) {
+        return res.status(400).json({ message: '데이터 형식이 올바르지 않습니다.' });
+    }
+
+    const product = await item.findById(productId).exec();
+
+    // 상품이 존재하지 않을 경우
+    if (!product) {
+        return res.status(404).json({ message: "상품 조회에 실패하였습니다." });
+    }
+
+    // 상품의 비밀번호가 일치하지 않을 경우
+    if (product.password !== password) {
+        return res.status(401).json({ message: "상품을 수정할 권한이 존재하지 않습니다." });
+    }
+
+    // 상품 정보 수정
+    product.title = title;
+    product.content = content;
+    product.status = status;
+
+    await product.save(); // 수정된 정보 저장
+
+    return res.status(200).json({ message: "상품 정보를 수정하였습니다." });
+
+});
+
+
+
 export default router;
