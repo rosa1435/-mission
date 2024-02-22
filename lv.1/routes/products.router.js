@@ -4,10 +4,10 @@ import item from '../schemas/products.schema.js'
 const router = express.Router();
 
 // 상품작성 API
-router.post('/api/products', async (req, res) => {
+router.post('/products', async (req, res) => {
     const { title, content, author, password, status } = req.body;
 
-    if (!title || !content || !author || !password || !status) {  // 데이터가 올바르게 입력 되지 않을 경우
+    if (!title || !content || !author || !password) {  // 데이터가 올바르게 입력 되지 않을 경우
         return res.status(400).json({ errorMessage: '데이터 형식이 올바르지 않습니다.' });
     }
 
