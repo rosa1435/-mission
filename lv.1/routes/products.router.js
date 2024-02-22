@@ -31,10 +31,26 @@ router.post('/products', async (req, res) => {
 // 상품 목록 조회 API
 
 router.get('/products', async (req, res) => {
-    const items = await item.find().sort({createdAt: -1}).exec();
-    return res.status(200).json({items});
+    const items = await item.find().sort({ createdAt: -1 }).exec();
+    return res.status(200).json({ items });
 });
 
+// 상품 상세조회 API
+router.get('/products/:productId', async (req, res) => {
+    const { productId } = req.params;
 
+
+    if (!/^[0-9a-fA-F]{24}$/.test(productId)) {  // 데이터가 올바르게 입력 되지 않을 경우
+        return res.status(400).json({ errorMessage: '데이터 형식이 올바르지 않습니다.' });
+    }
+
+
+    const oneitem = await item.findById(productId).exec();
+
+    if (!oneitem) { //상품이 존재하지 않을경우
+        return res.status(404).json({ message: "상품 조회에 실패하였습니다." })
+    }
+    return res.status(200).json(oneitem);
+});
 
 export default router;
