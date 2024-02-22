@@ -28,4 +28,13 @@ router.post('/products', async (req, res) => {
 
 
 
+// 상품 목록 조회 API
+
+router.get('/products', async (req, res) => {
+    const items = await item.find().sort({createdAt: -1}).exec();
+    return res.status(200).json({items});
+});
+
+
+
 export default router;
