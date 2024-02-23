@@ -89,5 +89,31 @@ router.patch('/products/:productId', async (req, res) => {
 });
 
 
+// 상품삭제 API
+router.delete('/products/:productId', async (req, res) => {
+    const { productId } = req.params;
+    const { password } = req.body; // 클라이언트로부터 삭제 요청 시 비밀번호 받기
+
+    if (!productId || !password) {
+        return res.status(400).json({ message: '데이터 형식이 올바르지 않습니다.' });
+    }
+
+    const product = await item.findById(productId).exec();
+
+    // 상품이 존재하지 않을 경우
+    if (!product) {
+        return res.status(404).json({ message: "상품 조회에 실패하였습니다." });
+    }
+
+    // 상품의 비밀번호가 일치하지 않을 경우
+    if (product.password !== password) {
+        return res.status(401).json({ message: "상품을 삭제할 권한이 존재하지 않습니다." });
+    }
+
+    // 상품 정보 삭제
+    await item.deleteOne({ _id: productId });
+
+    return res.status(200).json({ message: "상품이 성공적으로 삭제되었습니다." });
+});
 
 export default router;
