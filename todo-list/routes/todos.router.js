@@ -1,9 +1,17 @@
 import express from "express";
+import joi from "joi";
 import Todo from '../schemas/todo.schema.js';
 
 const router = express.Router();
 
-// 할일 등록 라우터
+
+
+
+
+
+
+
+// 할일 등록 API
 router.post('/todos', async(req, res, next) => {
     // 1. 클라이언트로 부터 받아온 value 데이터를 받아온다.
     const {value} = req.body;
